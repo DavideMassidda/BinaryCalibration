@@ -16,8 +16,8 @@ plot.roc <- function(x, interactive=TRUE, ...) {
     }
     graph <- measures %>%
         dplyr::mutate(
-            Label=sprintf("Dataset: %s\nCut-off: %.4f\nSensitivity: %.4f\nSpecificity: %.4f",
-                .data$Dataset, .data$Cutoff, .data$Sensitivity, .data$Specificity
+            Label=sprintf("Dataset: %s\nCut-off: %.4f\nSensitivity: %.4f\nSpecificity: %.4f\nAUC: %.4f",
+                .data$Dataset, .data$Cutoff, .data$Sensitivity, .data$Specificity, .data$AUC
             )
         ) %>%
         ggplot2::ggplot(

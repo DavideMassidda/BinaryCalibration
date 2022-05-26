@@ -27,6 +27,9 @@ from which candidate cut-offs must be extracted.}
 
 \item{...}{Further arguments for the function \code{plot} (not implemented).}
 }
+\value{
+An object of class \code{roc} containing two data tables of class \code{tibble}.
+}
 \description{
 Binary Calibration
 }

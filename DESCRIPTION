@@ -1,10 +1,10 @@
 Package: BinaryCalibration
 Type: Package
-Title: Calibration for bynary classification by GLM
-Version: 0.1.0
+Title: Cut-off calibration for binary GLM
+Version: 0.1.1
 Author: Davide Massidda
 Maintainer: Davide Massidda <d.massidda@kode-solutions.net>
-Description: Calculation of ROC measures and plot ROC curves for GLMs.
+Description: Functions to choose a probability cut-off for binary GLM by calculating ROC measures and plotting ROC curves.
 Imports: magrittr, rlang, tibble, dplyr, purrr, ggplot2, plotly
 License: MIT
 Encoding: UTF-8

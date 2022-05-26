@@ -18,7 +18,9 @@
             Precision = .data$TP / (.data$TP + .data$FP),
             Sensitivity = .data$TP / (.data$TP + .data$FN),
             Specificity = .data$TN / (.data$TN + .data$FP),
-            `1-Specificity` = 1-.data$Specificity
+            `1-Specificity` = 1-.data$Specificity,
+            AUC = (.data$Sensitivity + .data$Specificity)/2,
+            `F1-score` = 2 * (.data$Precision * .data$Sensitivity) / (.data$Precision + .data$Sensitivity)
         )
     return(measures)
 }
@@ -70,6 +72,7 @@
 #' @param x As object resulting from the function \code{roc}.
 #' @param interactive Make the plot interactive using \code{ggplotly}.
 #' @param ... Further arguments for the function \code{plot} (not implemented).
+#' @return An object of class \code{roc} containing two data tables of class \code{tibble}.
 #' @examples
 #' set.seed(666)
 #' n = 50
