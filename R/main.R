@@ -46,7 +46,8 @@
         cut_offs <- scores %>%
             as.numeric() %>%
             unique() %>%
-            sort()
+            sort() %>%
+            c(., 1)
     }
     measures <- cut_offs %>%
         sapply(simplify=FALSE, USE.NAMES=FALSE,
