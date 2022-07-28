@@ -90,7 +90,8 @@ roc <- function(data_list, model, target_name, cut_off_from=1) {
     cut_offs <- scores[[cut_off_from]] %>%
         as.numeric() %>%
         unique() %>%
-        sort()
+        sort() %>%
+        c(., 1)
     measures <- purrr::map2(data_list, scores, .f=.get_measures,
         target_name=target_name, cut_offs=cut_offs)
     class(measures) <- "roc"
