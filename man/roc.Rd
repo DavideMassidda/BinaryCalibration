@@ -5,7 +5,7 @@
 \alias{plot.roc}
 \title{Binary Calibration}
 \usage{
-roc(data_list, model, target_name, cut_off_from = 1)
+roc(data_list, model, target_name, cut_off_from = 1, AUC_min = 0)
 
 \method{plot}{roc}(x, interactive = TRUE, ...)
 }
@@ -20,6 +20,9 @@ containing the target variable.}
 
 \item{cut_off_from}{Character or integer indicating the location into the \code{data_list}
 from which candidate cut-offs must be extracted.}
+
+\item{AUC_min}{Numeric indicating the minimum value of AUC to select candidate cut-offs.
+All the cut-offs under this value will be dropped.}
 
 \item{x}{As object resulting from the function \code{roc}.}
 

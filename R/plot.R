@@ -32,7 +32,7 @@ plot.roc <- function(x, interactive=TRUE, ...) {
         ggplot2::scale_y_continuous(limits=c(0,1), breaks=seq(0,1,by=0.1)) +
         ggplot2::scale_color_brewer(palette="Set1", direction=-1) +
         ggplot2::xlab("False positive rate (1-specificity)") +
-        ggplot2::ylab("True positive rate (sensibility)")
+        ggplot2::ylab("True positive rate (sensitivity)")
     if(interactive) {
         graph <- plotly::ggplotly(graph, tooltip="Label")
     }

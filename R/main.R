@@ -1,6 +1,6 @@
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
-.get_measures_by_cutoff <- function(target, scores, cut_off) {
+.get_measures_by_cutoff <- function(target, scores, cut_off, AUC_min) {
     confusion <- table(
         observed=target,
         predicted=factor(
@@ -21,7 +21,8 @@
             `1-Specificity` = 1-.data$Specificity,
             AUC = (.data$Sensitivity + .data$Specificity)/2,
             `F1-score` = 2 * (.data$Precision * .data$Sensitivity) / (.data$Precision + .data$Sensitivity)
-        )
+        ) %>%
+        dplyr::filter(.data$AUC>=AUC_min)
     return(measures)
 }
 
@@ -38,7 +39,7 @@
 }
 
 #' @importFrom magrittr %>%
-.get_measures <- function(data, scores, target_name, cut_offs=NULL) {
+.get_measures <- function(data, scores, target_name, cut_offs=NULL, AUC_min) {
     target <- data %>%
         dplyr::select(!!target_name) %>%
         dplyr::pull()
@@ -52,7 +53,7 @@
     measures <- cut_offs %>%
         sapply(simplify=FALSE, USE.NAMES=FALSE,
         FUN=.get_measures_by_cutoff,
-        target=target, scores=scores) %>%
+        target=target, scores=scores, AUC_min=AUC_min) %>%
         dplyr::bind_rows()
     return(measures)
 }
@@ -70,6 +71,8 @@
 #' containing the target variable.
 #' @param cut_off_from Character or integer indicating the location into the \code{data_list}
 #' from which candidate cut-offs must be extracted.
+#' @param AUC_min Numeric indicating the minimum value of AUC to select candidate cut-offs.
+#' All the cut-offs under this value will be dropped.
 #' @param x As object resulting from the function \code{roc}.
 #' @param interactive Make the plot interactive using \code{ggplotly}.
 #' @param ... Further arguments for the function \code{plot} (not implemented).
@@ -85,7 +88,7 @@
 #' model <- glm(y~x, family=binomial, data=tab$train)
 #' measures <- roc(tab, model=model, target_name="y")
 #' plot(measures)
-roc <- function(data_list, model, target_name, cut_off_from=1) {
+roc <- function(data_list, model, target_name, cut_off_from=1, AUC_min=0) {
     scores <- lapply(data_list, .get_scores, model=model)
     cut_offs <- scores[[cut_off_from]] %>%
         as.numeric() %>%
@@ -93,7 +96,7 @@ roc <- function(data_list, model, target_name, cut_off_from=1) {
         sort() %>%
         c(., 1)
     measures <- purrr::map2(data_list, scores, .f=.get_measures,
-        target_name=target_name, cut_offs=cut_offs)
+        target_name=target_name, cut_offs=cut_offs, AUC_min=AUC_min)
     class(measures) <- "roc"
     return(measures)
 }
