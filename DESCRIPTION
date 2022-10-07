@@ -1,7 +1,7 @@
 Package: BinaryCalibration
 Type: Package
 Title: Cut-off calibration for binary GLM
-Version: 0.3.0
+Version: 0.4.0
 Author: Davide Massidda
 Maintainer: Davide Massidda <d.massidda@kode-solutions.net>
 Description: Functions to choose a probability cut-off for binary GLM by calculating ROC measures and plotting ROC curves.
